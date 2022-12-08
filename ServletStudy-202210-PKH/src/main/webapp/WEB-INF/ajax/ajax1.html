@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Insert title here</title>
+	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+</head>
+<body>
+	<input type="text" class="username">
+	<input type="text" class="password">
+	<input type="text" class="name">
+	<button type="button" class="submit-button">전송</button>
+	
+	<script type="text/javascript">
+		const submitButton = document.querySelector(".submit-button");
+		
+		submitButton.onclick = () => {
+			const username = document.querySelector(".username");
+			const password = document.querySelector(".password");
+			const name = document.querySelector(".name");
+			
+			let user = {
+				username: null,
+				password: null,
+				name: null
+			};
+			
+			user.username = username.value;
+			user.password = password.value;
+			user.name = name.value;
+			
+			let requestData = {
+				async: false, //async에 true -> 비동기, false -> 동기처리
+				type: "post",
+				url: "/api/ajax1",
+				data: user, // -> let user의 user를 의미
+				dataType: "text",
+				success: response => { // -> 화살표 함수
+					alert("요청 성공!");
+					alert(response);
+				},
+				erorr:function (response) { // -> 화살표 함수의 원형, 위아래는 같은 형태.
+					alert("요청 실패!");
+				}
+			};
+			
+			$.ajax(requestData);
+			
+			alert("이거 언제 호출됨?"); //async에 true -> 비동기 상태에는 이게 먼저 호출되버린다.
+			
+			alert("데이터 전송");
+		};
+	</script>
+</body>
+</html>
+<!--
+alert(`
+	username -> ${user.username} 
+	password -> ${user.password} 
+	name -> ${user.name}
+`);
+ -->
